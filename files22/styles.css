@@ -1,0 +1,148 @@
+:root {
+  --bone: #f4f7ff;
+  --mute: #aab8d4;
+  --faint: #7d88a3;
+  --rose: #ff6fa5;
+  --pink: #ff9ec4;
+  --line: rgba(255,255,255,0.28);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--bone);
+  min-height: 100vh; min-height: 100dvh;
+  position: relative; background: #05080f;
+  -webkit-font-smoothing: antialiased;
+  user-select: none; touch-action: manipulation;
+}
+
+/* ---------- background video (crisp, no blur) ---------- */
+#bg {
+  position: fixed; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+}
+#veil {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(5,8,15,0.50) 0%, rgba(5,8,15,0.12) 28%,
+    rgba(5,8,15,0.16) 58%, rgba(5,8,15,0.74) 100%);
+}
+
+.screen {
+  position: fixed; inset: 0; z-index: 3;
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  padding: max(40px, env(safe-area-inset-top)) 26px max(40px, env(safe-area-inset-bottom));
+  text-align: center;
+}
+.screen.on { display: flex; animation: fade 1.8s ease both; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+.eyebrow {
+  font-family: 'Manrope', sans-serif; font-size: 0.62rem; letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--pink); font-weight: 600; margin-bottom: 22px; text-shadow: 0 0 18px rgba(255,145,190,0.6);
+}
+
+/* ---------- opening: glowing heart ---------- */
+.heart-btn { width: 140px; height: 140px; border: none; background: none; cursor: pointer; padding: 0;
+  animation: beat 1.7s ease-in-out infinite; filter: drop-shadow(0 0 26px rgba(255,93,143,0.75)); }
+.heart { width: 100%; height: 100%; }
+.heart path { fill: url(#hg); stroke: #ffd3e4; stroke-width: 1; }
+@keyframes beat { 0%,100% { transform: scale(1);} 14% { transform: scale(1.1);} 28% { transform: scale(1);} 42% { transform: scale(1.06);} 56% { transform: scale(1);} }
+.heart-btn.go { animation: burst 0.8s ease forwards; }
+@keyframes burst { 0% { transform: scale(1);} 40% { transform: scale(1.25);} 100% { transform: scale(0.2); opacity: 0; } }
+.open-label { margin-top: 20px; font-family: 'Manrope', sans-serif; font-size: 0.7rem; letter-spacing: 0.42em; text-transform: uppercase; color: #fff; }
+.gate-hint { margin-top: 14px; font-family: 'Manrope', sans-serif; font-size: 0.56rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faint); animation: pulse 2.8s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* ---------- message: scrolls if tall, centered if short ---------- */
+#message.on {
+  display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0;
+}
+#message .msg-inner {
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; max-width: 560px; margin: 0 auto; box-sizing: border-box;
+  padding: max(64px, env(safe-area-inset-top)) 26px max(78px, calc(env(safe-area-inset-bottom) + 28px));
+}
+
+/* HEADING — pink for her */
+.greeting {
+  font-weight: 700; font-size: clamp(2.6rem, 13vw, 3.9rem); line-height: 1.04;
+  color: #ff7eb3;
+  text-shadow: 0 0 34px rgba(255,111,165,0.65), 0 2px 26px rgba(0,0,0,0.6);
+}
+.greeting[dir="rtl"] { font-family: 'Noto Naskh Arabic', serif; font-weight: 700; line-height: 1.45; font-size: clamp(2.1rem, 10vw, 3.1rem); }
+.hairline { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--rose), transparent); margin: 22px auto 30px; }
+
+.toggle { display: inline-flex; align-items: center; gap: 2px; margin-bottom: 32px; }
+.toggle button { background: none; border: none; color: var(--mute); font-family: 'Manrope', sans-serif; font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; padding: 8px 18px; cursor: pointer; transition: color 0.4s ease; }
+.toggle button[data-lang="ku"] { font-family: 'Noto Naskh Arabic', serif; text-transform: none; font-size: 0.95rem; letter-spacing: 0; }
+.toggle button.active { color: var(--rose); text-shadow: 0 0 16px rgba(255,93,143,0.6); }
+.toggle .divider { width: 1px; height: 14px; background: var(--line); }
+
+.body { font-weight: 600; font-size: clamp(1.16rem, 4.7vw, 1.4rem); line-height: 1.85; color: #fff;
+  text-shadow: 0 2px 22px rgba(0,0,0,0.75); transition: opacity 0.5s ease; }
+.body p { margin-bottom: 1.25rem; }
+.body[dir="rtl"] { font-family: 'Noto Naskh Arabic', serif; font-weight: 700; line-height: 2.2; font-size: clamp(1.05rem, 4.4vw, 1.28rem); }
+.body.fade { opacity: 0; }
+
+.end { margin-top: 36px; font-weight: 600; font-style: italic; font-size: 1.45rem; color: var(--rose); text-shadow: 0 0 22px rgba(255,93,143,0.6), 0 2px 16px rgba(0,0,0,0.6); }
+
+/* staggered reveal */
+.reveal, .body p { opacity: 0; transform: translateY(16px); animation: revealUp 1.1s cubic-bezier(.22,.61,.36,1) forwards; animation-delay: calc(var(--i, 0) * 0.18s + 0.2s); }
+.body p:nth-child(1) { --i: 4; }
+.body p:nth-child(2) { --i: 5; }
+.body p:nth-child(3) { --i: 6; }
+@keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+
+/* ---------- song subtitle: RIGHT side, bold, translucent, fading ---------- */
+.caption {
+  position: fixed; z-index: 2;
+  right: 16px; top: 43%; transform: translateY(-50%);
+  width: min(72%, 360px); text-align: right; pointer-events: none;
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 700;
+  font-size: clamp(1.5rem, 7.4vw, 2.4rem); line-height: 1.24;
+  color: rgba(255,255,255,0.34);
+  text-shadow: 0 2px 26px rgba(0,0,0,0.6), 0 0 36px rgba(255,111,165,0.28);
+  opacity: 0; transition: opacity 0.8s ease;
+}
+.caption.show { opacity: 1; }
+
+/* ---------- music ---------- */
+#soundToggle {
+  position: fixed; z-index: 6; right: 16px; bottom: max(16px, env(safe-area-inset-bottom));
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,111,165,0.16); border: 1px solid var(--line); color: var(--rose);
+  font-size: 1.05rem; cursor: pointer; display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(6px); transition: transform 0.3s ease; }
+#soundToggle.show { display: flex; }
+#soundToggle.muted { color: var(--faint); background: rgba(255,255,255,0.06); }
+#soundToggle:active { transform: scale(0.92); }
+
+/* ---------- romantic countdown ---------- */
+#locked .lock-line {
+  font-style: italic; font-weight: 400; font-size: 1.3rem; color: var(--mute);
+  margin-bottom: 4px; text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+}
+#locked .lock-date {
+  font-weight: 700; font-size: clamp(2.8rem, 15vw, 4rem); line-height: 1.04; color: #ff7eb3;
+  text-shadow: 0 0 34px rgba(255,111,165,0.65), 0 2px 26px rgba(0,0,0,0.6); margin-bottom: 36px;
+}
+#locked .countdown { display: flex; align-items: flex-start; justify-content: center; gap: clamp(5px, 2.4vw, 13px); margin-bottom: 38px; }
+#locked .unit { display: flex; flex-direction: column; align-items: center; min-width: 46px; }
+#locked .num {
+  font-family: 'Cormorant Garamond', serif; font-weight: 600;
+  font-size: clamp(2rem, 11vw, 3rem); line-height: 1; color: #fff; font-variant-numeric: tabular-nums;
+  animation: numglow 3s ease-in-out infinite;
+}
+#locked .label { margin-top: 9px; font-family: 'Manrope', sans-serif; font-size: 0.54rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--pink); }
+#locked .sep { color: var(--rose); font-size: 0.95rem; opacity: 0.7; margin-top: 0.55em; text-shadow: 0 0 14px rgba(255,111,165,0.7); animation: heartpulse 1.7s ease-in-out infinite; }
+#locked .signoff { font-style: italic; font-weight: 600; font-size: 1.3rem; color: var(--rose); text-shadow: 0 0 22px rgba(255,93,143,0.6), 0 2px 16px rgba(0,0,0,0.6); }
+@keyframes numglow {
+  0%,100% { text-shadow: 0 0 20px rgba(255,111,165,0.4), 0 2px 18px rgba(0,0,0,0.6); }
+  50%     { text-shadow: 0 0 40px rgba(255,111,165,0.85), 0 2px 18px rgba(0,0,0,0.6); }
+}
+@keyframes heartpulse { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.18); opacity: 1; } }

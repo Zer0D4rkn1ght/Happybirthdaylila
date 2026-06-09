@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#05080f">
+<title>For You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Manrope:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <video id="bg" autoplay muted loop playsinline preload="auto" poster="">
+    <source src="vide.mp4" type="video/mp4">
+    <source src="video.mp4" type="video/mp4">
+  </video>
+  <div id="veil"></div>
+
+  <!-- big translucent song subtitle, top -->
+  <div id="caption" class="caption"></div>
+
+  <!-- COUNTDOWN (shows until 22 June) -->
+  <section id="locked" class="screen on">
+    <div class="eyebrow">counting down to you</div>
+    <div class="lock-line">until your day</div>
+    <h1 class="lock-date">22 June</h1>
+    <div class="countdown" id="countdown">
+      <div class="unit"><span class="num" id="d">0</span><span class="label">days</span></div>
+      <span class="sep">&#10084;</span>
+      <div class="unit"><span class="num" id="h">00</span><span class="label">hours</span></div>
+      <span class="sep">&#10084;</span>
+      <div class="unit"><span class="num" id="m">00</span><span class="label">minutes</span></div>
+      <span class="sep">&#10084;</span>
+      <div class="unit"><span class="num" id="s">00</span><span class="label">seconds</span></div>
+    </div>
+    <div class="signoff">From G&nbsp;🐰</div>
+  </section>
+
+  <!-- OPENING -->
+  <section id="gate" class="screen">
+    <div class="eyebrow">for you</div>
+    <button class="heart-btn" id="openBtn" aria-label="Open">
+      <svg viewBox="0 0 100 100" class="heart">
+        <defs>
+          <radialGradient id="hg" cx="42%" cy="34%" r="70%">
+            <stop offset="0%" stop-color="#ffd3e4"/>
+            <stop offset="55%" stop-color="#ff6fa5"/>
+            <stop offset="100%" stop-color="#d6378f"/>
+          </radialGradient>
+        </defs>
+        <path d="M50 86 C50 86 14 60 14 36 C14 23 25 15 36 15 C44 15 50 21 50 29 C50 21 56 15 64 15 C75 15 86 23 86 36 C86 60 50 86 50 86 Z"/>
+      </svg>
+    </button>
+    <div class="open-label">open</div>
+    <div class="gate-hint">tap to begin · with sound</div>
+  </section>
+
+  <!-- MESSAGE -->
+  <section id="message" class="screen">
+    <div class="msg-inner">
+      <div class="eyebrow reveal" style="--i:0">happy birthday</div>
+      <h1 class="greeting reveal" id="greeting" style="--i:1">Happy Birthday</h1>
+      <div class="hairline reveal" style="--i:2"></div>
+      <div class="toggle reveal" style="--i:3">
+        <button data-lang="en" class="active" id="btnEn">English</button>
+        <span class="divider"></span>
+        <button data-lang="ku" id="btnKu">کوردی</button>
+      </div>
+      <div class="body" id="body"></div>
+      <div class="end reveal" id="end" style="--i:7">From G&nbsp;🐰</div>
+    </div>
+  </section>
+
+  <!-- music -->
+  <button id="soundToggle" aria-label="Toggle music">♪</button>
+  <audio id="song" src="love.mp3" loop preload="auto" playsinline></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
